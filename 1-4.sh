@@ -1,35 +1,22 @@
 #!/bin/bash
 
-dependencies=("pygame" "sys" "csv" "os" "math")
+if command -V python3 >/dev/null 2>&1 ; then
+    echo "python3 found"
+    echo "version: $(python3 -V)"
+else
+    echo "python3 not found"
+fi
 
-function check_dependency() {
- 
-  if ! command -v $1 &> /dev/null
-  then
-    echo "Dependency $1 is not installed."
-    echo "Please install it using the command: $2"
-    echo ""
+if command -V pip >/dev/null 2>&1 ; then
+    echo "pip found"
+    echo "version: $(pip -V)"
+else
+    echo "pip not found. Use: apt install python3-pip"
+fi
 
-  else
-    echo "Dependency $1 is installed."
-  fi
-
-}
-echo ""
-echo "---------------------------------------------------------------------"
-echo "To run this project, you need the following dependencies: "
-echo "---------------------------------------------------------------------"
-for item in "${dependencies[@]}"
-do
-  echo "$item"
-done
-
-echo ""
-echo "---------------------------------------------------------------------"
-echo "checking for dependencies..."
-echo "---------------------------------------------------------------------"
-for item in "${dependencies[@]}"
-do
-  check_dependency "$item" "sudo apt-get install $item"\;
-done
-
+if pip show pygame &>/dev/null; then
+    echo "pygame found"
+    echo "version: $(pip show pygame)"
+else
+    echo "pygame not found. Use: python3 -m pip install -U pygame --user"
+fi
